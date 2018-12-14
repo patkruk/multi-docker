@@ -1,0 +1,16 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t patkruk/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run patkruk/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t patkruk/multi-client ./client
+  - docker build -t patkruk/multi-nginx ./nginx
+  - docker build -t patkruk/multi-server ./server
+  - docker build -t patkruk/multi-worker ./worker
