@@ -14,3 +14,10 @@ after_success:
   - docker build -t patkruk/multi-nginx ./nginx
   - docker build -t patkruk/multi-server ./server
   - docker build -t patkruk/multi-worker ./worker
+  # Log into the Docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to Docker Hub
+  - docker push patkruk/multi-client
+  - docker push patkruk/multi-nginx
+  - docker push patkruk/multi-server
+  - docker push patkruk/multi-worker
